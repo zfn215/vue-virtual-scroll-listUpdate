@@ -22,18 +22,11 @@ export default {
       }
     }
   },
-  data(){
-    return {
-      cacachObj:{}
-    }
-  },
   mounted() {
     
   },
   methods: {
     onChange (e) {
-      console.log('[ this.source ] >', this.source)
-      console.log('[ this.source ] >', this.cacachObj)
       this.dispatch('keep-state', 'checkBoxValueChange', this.source.id, e.target.checked)
     },
     onClickName () {

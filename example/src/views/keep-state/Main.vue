@@ -35,7 +35,7 @@ import { Random } from "../../common/mock";
 // import genUniqueId from "../../common/gen-unique-id";
 import { TAB_TYPE, DEFAULT_TAB } from "../../common/const";
 
-const TOTAL_COUNT = 10000;
+const TOTAL_COUNT = 1000;
 
 const DataItems = [];
 let count = TOTAL_COUNT;
@@ -74,6 +74,9 @@ export default {
         .filter((item) => !!item);
     },
   },
+  // mounted() {
+  //  console.log('[  this.$refs.list.getIdObject(99) ] >',  this.$refs.virtualList.getIdObject(99))
+  // },
   created() {
     // detecting change checked value from item component event.
     this.$on("checkBoxValueChange", (id, value) => {

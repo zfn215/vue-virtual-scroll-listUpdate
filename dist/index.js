@@ -1,5 +1,5 @@
 /*!
- * vue-virtual-scroll-list v2.3.5
+ * vue-virtual-scroll-list v2.3.6
  * open source under the MIT license
  * https://github.com/tangbc/vue-virtual-scroll-list#readme
  */
@@ -892,9 +892,10 @@
         var dataKey = this.dataKey;
 
         if (typeof dataKey !== 'function') {
-          this.current = this.keyBy(this.dataSources, function (x) {
+          this.current = null;
+          this.current = JSON.stringify(this.keyBy(this.dataSources, function (x) {
             return x[dataKey];
-          });
+          }));
         }
 
         return this.dataSources.map(function (dataSource) {
@@ -903,7 +904,7 @@
       },
       // 根据id获取当前的对象
       getIdObject: function getIdObject(id) {
-        return this.current[id] || {};
+        return JSON.parse(this.current)[id] || {};
       },
       keyBy: function keyBy(list, by) {
         return list.reduce(function (acc, x) {

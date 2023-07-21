@@ -225,13 +225,14 @@ const VirtualList = Vue.component('virtual-list', {
     getUniqueIdFromDataSources () {
       const { dataKey } = this
       if (typeof dataKey !== 'function') {
-        this.current = this.keyBy(this.dataSources, (x) => x[dataKey])
+        this.current = null
+        this.current = JSON.stringify(this.keyBy(this.dataSources, (x) => x[dataKey]))
       }
       return this.dataSources.map((dataSource) => typeof dataKey === 'function' ? dataKey(dataSource) : dataSource[dataKey])
     },
     // 根据id获取当前的对象
     getIdObject (id) {
-      return this.current[id] || {}
+      return JSON.parse(this.current)[id] || {}
     },
     keyBy (list, by) {
       return list.reduce((acc, x) => {
