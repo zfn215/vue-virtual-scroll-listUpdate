@@ -1,5 +1,5 @@
 /*!
- * vue-virtual-scroll-list v2.3.7
+ * vue-virtual-scroll-list v2.3.8
  * open source under the MIT license
  * https://github.com/tangbc/vue-virtual-scroll-list#readme
  */
@@ -702,6 +702,7 @@
     // string value also use for aria role attribute
     FOOTER: 'tfoot'
   };
+  var mapData = new Map();
   var VirtualList = Vue.component('virtual-list', {
     props: VirtualProps,
     data: function data() {
@@ -890,27 +891,20 @@
       },
       getUniqueIdFromDataSources: function getUniqueIdFromDataSources() {
         var dataKey = this.dataKey;
-
-        if (typeof dataKey !== 'function') {
-          this.current = null;
-          this.current = JSON.stringify(this.keyBy(this.dataSources, function (x) {
-            return x[dataKey];
-          }));
-        }
-
-        return this.dataSources.map(function (dataSource) {
-          return typeof dataKey === 'function' ? dataKey(dataSource) : dataSource[dataKey];
+        return this.dataSources.map(function (dataSource, index) {
+          if (typeof dataKey === 'function') {
+            mapData.set(dataSource[dataKey], index);
+            return dataKey(dataSource);
+          } else {
+            mapData.set(dataSource[dataKey], index);
+            return dataSource[dataKey];
+          }
         });
       },
       // 根据id获取当前的对象
       getIdObject: function getIdObject(id) {
-        return JSON.parse(this.current)[id] || {};
-      },
-      keyBy: function keyBy(list, by) {
-        return list.reduce(function (acc, x) {
-          acc[by(x)] = x;
-          return acc;
-        }, {});
+        // console.log('[ mapData ] >', mapData)
+        return mapData.get(id) || {};
       },
       // event called when each item mounted or size changed
       onItemResized: function onItemResized(id, size) {
