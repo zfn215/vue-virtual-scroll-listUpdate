@@ -74,10 +74,10 @@ export default {
         .filter((item) => !!item);
     },
   },
-  // mounted() {
-  //   console.log('[  this.$refs.virtualList ] >',  this.$refs.virtualList)
-  //  console.log('[  this.$refs.list.getIdObject(99) ] >',  this.$refs.virtualList.getIdObject(99))
-  // },
+  mounted() {
+    console.log('[  this.$refs.virtualList ] >',  this.$refs.virtualList)
+   console.log('[  this.$refs.list.getIdObject(99) ] >',  this.$refs.virtualList.getIdObject(99))
+  },
   created() {
     // detecting change checked value from item component event.
     this.$on("checkBoxValueChange", (id, value) => {

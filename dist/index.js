@@ -702,7 +702,6 @@
     // string value also use for aria role attribute
     FOOTER: 'tfoot'
   };
-  var mapData = new Map();
   var VirtualList = Vue.component('virtual-list', {
     props: VirtualProps,
     data: function data() {
@@ -890,21 +889,26 @@
         this.range = this.virtual.getRange();
       },
       getUniqueIdFromDataSources: function getUniqueIdFromDataSources() {
+        var _this2 = this;
+
         var dataKey = this.dataKey;
+        this.mapData = new Map();
         return this.dataSources.map(function (dataSource, index) {
           if (typeof dataKey === 'function') {
-            mapData.set(dataSource[dataKey], index);
+            _this2.mapData.set(dataSource[dataKey], index);
+
             return dataKey(dataSource);
           } else {
-            mapData.set(dataSource[dataKey], index);
+            _this2.mapData.set(dataSource[dataKey], index);
+
             return dataSource[dataKey];
           }
         });
       },
       // 根据id获取当前的对象
       getIdObject: function getIdObject(id) {
-        // console.log('[ mapData ] >', mapData)
-        return mapData.get(id) || {};
+        console.log('[ mapData ] >', this.mapData);
+        return this.mapData.get(id) || {};
       },
       // event called when each item mounted or size changed
       onItemResized: function onItemResized(id, size) {
