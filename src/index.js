@@ -15,7 +15,7 @@ const SLOT_TYPE = {
   HEADER: 'thead', // string value also use for aria role attribute
   FOOTER: 'tfoot'
 }
-
+const mapData = new Map()
 const VirtualList = Vue.component('virtual-list', {
   props: VirtualProps,
 
@@ -50,7 +50,6 @@ const VirtualList = Vue.component('virtual-list', {
     this.directionKey = this.isHorizontal ? 'scrollLeft' : 'scrollTop'
 
     this.installVirtual()
-
     // listen item size change
     this.$on(EVENT_TYPE.ITEM, this.onItemResized)
 
@@ -224,21 +223,20 @@ const VirtualList = Vue.component('virtual-list', {
 
     getUniqueIdFromDataSources () {
       const { dataKey } = this
-      if (typeof dataKey !== 'function') {
-        this.current = null
-        this.current = JSON.stringify(this.keyBy(this.dataSources, (x) => x[dataKey]))
-      }
-      return this.dataSources.map((dataSource) => typeof dataKey === 'function' ? dataKey(dataSource) : dataSource[dataKey])
+      return this.dataSources.map((dataSource, index) => {
+        if (typeof dataKey === 'function') {
+          mapData.set(dataSource[dataKey], index)
+          return dataKey(dataSource)
+        } else {
+          mapData.set(dataSource[dataKey], index)
+          return dataSource[dataKey]
+        }
+      })
     },
     // 根据id获取当前的对象
     getIdObject (id) {
-      return JSON.parse(this.current)[id] || {}
-    },
-    keyBy (list, by) {
-      return list.reduce((acc, x) => {
-        acc[by(x)] = x
-        return acc
-      }, {})
+      // console.log('[ mapData ] >', mapData)
+      return mapData.get(id) || {}
     },
     // event called when each item mounted or size changed
     onItemResized (id, size) {

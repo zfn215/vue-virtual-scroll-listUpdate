@@ -75,6 +75,7 @@ export default {
     },
   },
   // mounted() {
+  //   console.log('[  this.$refs.virtualList ] >',  this.$refs.virtualList)
   //  console.log('[  this.$refs.list.getIdObject(99) ] >',  this.$refs.virtualList.getIdObject(99))
   // },
   created() {
