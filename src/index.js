@@ -20,7 +20,8 @@ const VirtualList = Vue.component('virtual-list', {
 
   data () {
     return {
-      range: null
+      range: null,
+      mapData: new Map()
     }
   },
 
@@ -222,12 +223,13 @@ const VirtualList = Vue.component('virtual-list', {
 
     getUniqueIdFromDataSources () {
       const { dataKey } = this
-      this.mapData = new Map()
+      // this.mapData = new Map()
       return this.dataSources.map((dataSource, index) => {
         if (typeof dataKey === 'function') {
           this.mapData.set(dataSource[dataKey], index)
           return dataKey(dataSource)
         } else {
+          // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
           this.mapData.set(dataSource[dataKey], index)
           return dataSource[dataKey]
         }

@@ -1,5 +1,5 @@
 /*!
- * vue-virtual-scroll-list v2.3.8
+ * vue-virtual-scroll-list v2.3.9
  * open source under the MIT license
  * https://github.com/tangbc/vue-virtual-scroll-list#readme
  */
@@ -706,7 +706,8 @@
     props: VirtualProps,
     data: function data() {
       return {
-        range: null
+        range: null,
+        mapData: new Map()
       };
     },
     watch: {
@@ -891,14 +892,15 @@
       getUniqueIdFromDataSources: function getUniqueIdFromDataSources() {
         var _this2 = this;
 
-        var dataKey = this.dataKey;
-        this.mapData = new Map();
+        var dataKey = this.dataKey; // this.mapData = new Map()
+
         return this.dataSources.map(function (dataSource, index) {
           if (typeof dataKey === 'function') {
             _this2.mapData.set(dataSource[dataKey], index);
 
             return dataKey(dataSource);
           } else {
+            // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
             _this2.mapData.set(dataSource[dataKey], index);
 
             return dataSource[dataKey];
@@ -907,7 +909,7 @@
       },
       // 根据id获取当前的对象
       getIdObject: function getIdObject(id) {
-        console.log('[ mapData ] >', this.mapData);
+        // console.log('[ mapData ] >', this.mapData)
         return this.mapData.get(id) || {};
       },
       // event called when each item mounted or size changed
