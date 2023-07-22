@@ -74,10 +74,6 @@ export default {
         .filter((item) => !!item);
     },
   },
-  mounted() {
-    console.log('[  this.$refs.virtualList ] >',  this.$refs.virtualList)
-   console.log('[  this.$refs.list.getIdObject(99) ] >',  this.$refs.virtualList.getIdObject(99))
-  },
   created() {
     // detecting change checked value from item component event.
     this.$on("checkBoxValueChange", (id, value) => {
@@ -87,9 +83,6 @@ export default {
       }
     });
   },
-  // mounted() {
-  //   console.log('[ this.$refs.virtualList.getIdObject(1000) ] >', this.$refs.virtualList.getIdObject(1000))
-  // },
   methods: {
     onTabChange(type) {
       this.isShowView = type === TAB_TYPE.VIEW;

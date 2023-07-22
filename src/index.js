@@ -235,10 +235,10 @@ const VirtualList = Vue.component('virtual-list', {
         }
       })
     },
-    // 根据id获取当前的对象
+    // 根据id获取当前索引
     getIdObject (id) {
-      // console.log('[ mapData ] >', this.mapData)
-      return this.mapData.get(id) || {}
+      const index = this.mapData.get(id)
+      return index
     },
     // event called when each item mounted or size changed
     onItemResized (id, size) {

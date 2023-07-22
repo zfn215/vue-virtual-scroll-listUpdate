@@ -909,8 +909,8 @@
       },
       // 根据id获取当前的对象
       getIdObject: function getIdObject(id) {
-        // console.log('[ mapData ] >', this.mapData)
-        return this.mapData.get(id) || {};
+        var index = this.mapData.get(id);
+        return index;
       },
       // event called when each item mounted or size changed
       onItemResized: function onItemResized(id, size) {
