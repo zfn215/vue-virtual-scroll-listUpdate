@@ -1,5 +1,5 @@
 /*!
- * vue-virtual-scroll-list v2.3.12
+ * vue-virtual-scroll-list v2.3.13
  * open source under the MIT license
  * https://github.com/tangbc/vue-virtual-scroll-list#readme
  */
@@ -716,6 +716,8 @@
         this.virtual.handleDataSourcesChange();
       },
       dataSources: function dataSources(val) {
+        this.mapData.clear();
+
         if (val.length) {
           this.idGetIndex();
         }
@@ -898,7 +900,7 @@
       idGetIndex: function idGetIndex() {
         var _this2 = this;
 
-        console.log('[ 1 ] >', 1);
+        // console.log('[ 1 ] >', 1)
         var dataKey = this.dataKey; // this.mapData = new Map()
 
         return this.dataSources.map(function (dataSource, index) {
