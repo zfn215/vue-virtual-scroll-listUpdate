@@ -21,7 +21,8 @@
           :item-class="'list-item-keep'"
         />
       </div>
-
+      <span @click="click1" style="margin-right: 100px;">1</span>
+      <span @click="click3">2</span>
       <codeblock v-show="!isShowView" />
     </div>
   </div>
@@ -84,6 +85,52 @@ export default {
     });
   },
   methods: {
+    click1() {
+      this.items = [
+        {
+          index: 1,
+          name: 1,
+          id: 1,
+          checked: false,
+        },
+        {
+          index: 2,
+          name: 2,
+          id: 2,
+          checked: false,
+        },
+        {
+          index: 3,
+          name: 3,
+          id: 3,
+          checked: false,
+        },
+      ];
+      // console.log('[ virtualList ] >', this.$refs.virtualList)
+    },
+    click3() {
+      this.items = [
+      {
+          index: 4,
+          name: 4,
+          id: 4,
+          checked: false,
+        },
+        {
+          index: 5,
+          name: 5,
+          id: 6,
+          checked: false,
+        },
+        {
+          index: 7,
+          name: 7,
+          id: 7,
+          checked: false,
+        },
+      ];
+      // console.log('[ virtualList ] >', this.$refs.virtualList)
+    },
     onTabChange(type) {
       this.isShowView = type === TAB_TYPE.VIEW;
     },

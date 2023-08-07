@@ -30,7 +30,11 @@ const VirtualList = Vue.component('virtual-list', {
       this.virtual.updateParam('uniqueIds', this.getUniqueIdFromDataSources())
       this.virtual.handleDataSourcesChange()
     },
-
+    dataSources (val) {
+      if (val.length) {
+        this.idGetIndex()
+      }
+    },
     keeps (newValue) {
       this.virtual.updateParam('keeps', newValue)
       this.virtual.handleSlotSizeChange()
@@ -216,21 +220,35 @@ const VirtualList = Vue.component('virtual-list', {
         buffer: Math.round(this.keeps / 3), // recommend for a third of keeps
         uniqueIds: this.getUniqueIdFromDataSources()
       }, this.onRangeChanged)
-
+      this.idGetIndex()
       // sync initial range
       this.range = this.virtual.getRange()
     },
-
-    getUniqueIdFromDataSources () {
+    idGetIndex () {
+      console.log('[ 1 ] >', 1)
       const { dataKey } = this
       // this.mapData = new Map()
       return this.dataSources.map((dataSource, index) => {
         if (typeof dataKey === 'function') {
           this.mapData.set(dataSource[dataKey], index)
-          return dataKey(dataSource)
+          // return dataKey(dataSource)
         } else {
           // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
           this.mapData.set(dataSource[dataKey], index)
+          // return dataSource[dataKey]
+        }
+      })
+    },
+    getUniqueIdFromDataSources () {
+      const { dataKey } = this
+      // this.mapData = new Map()
+      return this.dataSources.map((dataSource, index) => {
+        if (typeof dataKey === 'function') {
+          // this.mapData.set(dataSource[dataKey], index)
+          return dataKey(dataSource)
+        } else {
+          // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
+          // this.mapData.set(dataSource[dataKey], index)
           return dataSource[dataKey]
         }
       })
