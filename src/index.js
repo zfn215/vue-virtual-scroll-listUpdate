@@ -26,16 +26,16 @@ const VirtualList = Vue.component('virtual-list', {
   },
 
   watch: {
-    'dataSources.length' () {
+    dataSources () {
       this.virtual.updateParam('uniqueIds', this.getUniqueIdFromDataSources())
       this.virtual.handleDataSourcesChange()
     },
-    dataSources (val) {
-      this.mapData.clear()
-      if (val.length) {
-        this.idGetIndex()
-      }
-    },
+    // dataSources (val) {
+    //   this.mapData.clear()
+    //   if (val.length) {
+    //     this.idGetIndex()
+    //   }
+    // },
     keeps (newValue) {
       this.virtual.updateParam('keeps', newValue)
       this.virtual.handleSlotSizeChange()
@@ -221,35 +221,35 @@ const VirtualList = Vue.component('virtual-list', {
         buffer: Math.round(this.keeps / 3), // recommend for a third of keeps
         uniqueIds: this.getUniqueIdFromDataSources()
       }, this.onRangeChanged)
-      this.idGetIndex()
+      // this.idGetIndex()
       // sync initial range
       this.range = this.virtual.getRange()
     },
-    idGetIndex () {
-      // console.log('[ 1 ] >', 1)
-      const { dataKey } = this
-      // this.mapData = new Map()
-      return this.dataSources.map((dataSource, index) => {
-        if (typeof dataKey === 'function') {
-          this.mapData.set(dataSource[dataKey], index)
-          // return dataKey(dataSource)
-        } else {
-          // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
-          this.mapData.set(dataSource[dataKey], index)
-          // return dataSource[dataKey]
-        }
-      })
-    },
+    // idGetIndex () {
+    //   // console.log('[ 1 ] >', 1)
+    //   const { dataKey } = this
+    //   // this.mapData = new Map()
+    //   return this.dataSources.map((dataSource, index) => {
+    //     if (typeof dataKey === 'function') {
+    //       this.mapData.set(dataSource[dataKey], index)
+    //       // return dataKey(dataSource)
+    //     } else {
+    //       // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
+    //       this.mapData.set(dataSource[dataKey], index)
+    //       // return dataSource[dataKey]
+    //     }
+    //   })
+    // },
     getUniqueIdFromDataSources () {
       const { dataKey } = this
       // this.mapData = new Map()
       return this.dataSources.map((dataSource, index) => {
         if (typeof dataKey === 'function') {
-          // this.mapData.set(dataSource[dataKey], index)
+          this.mapData.set(dataSource[dataKey], index)
           return dataKey(dataSource)
         } else {
           // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
-          // this.mapData.set(dataSource[dataKey], index)
+          this.mapData.set(dataSource[dataKey], index)
           return dataSource[dataKey]
         }
       })

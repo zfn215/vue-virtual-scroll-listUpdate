@@ -106,7 +106,7 @@ export default {
           checked: false,
         },
       ];
-      // console.log('[ virtualList ] >', this.$refs.virtualList)
+      console.log('[ virtualList ] >', this.$refs.virtualList)
     },
     click3() {
       this.items = [
@@ -129,7 +129,7 @@ export default {
           checked: false,
         },
       ];
-      // console.log('[ virtualList ] >', this.$refs.virtualList)
+      console.log('[ virtualList ] >', this.$refs.virtualList)
     },
     onTabChange(type) {
       this.isShowView = type === TAB_TYPE.VIEW;
