@@ -31,6 +31,7 @@ const VirtualList = Vue.component('virtual-list', {
       this.virtual.handleDataSourcesChange()
     },
     dataSources (val) {
+      this.mapData.clear()
       if (val.length) {
         this.idGetIndex()
       }
@@ -225,7 +226,7 @@ const VirtualList = Vue.component('virtual-list', {
       this.range = this.virtual.getRange()
     },
     idGetIndex () {
-      console.log('[ 1 ] >', 1)
+      // console.log('[ 1 ] >', 1)
       const { dataKey } = this
       // this.mapData = new Map()
       return this.dataSources.map((dataSource, index) => {
