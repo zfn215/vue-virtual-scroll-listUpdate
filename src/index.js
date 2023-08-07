@@ -243,6 +243,7 @@ const VirtualList = Vue.component('virtual-list', {
     getUniqueIdFromDataSources () {
       const { dataKey } = this
       // this.mapData = new Map()
+      this.mapData.clear()
       return this.dataSources.map((dataSource, index) => {
         if (typeof dataKey === 'function') {
           this.mapData.set(dataSource[dataKey], index)

@@ -1,5 +1,5 @@
 /*!
- * vue-virtual-scroll-list v2.3.13
+ * vue-virtual-scroll-list v2.3.15
  * open source under the MIT license
  * https://github.com/tangbc/vue-virtual-scroll-list#readme
  */
@@ -711,17 +711,16 @@
       };
     },
     watch: {
-      'dataSources.length': function dataSourcesLength() {
+      dataSources: function dataSources() {
         this.virtual.updateParam('uniqueIds', this.getUniqueIdFromDataSources());
         this.virtual.handleDataSourcesChange();
       },
-      dataSources: function dataSources(val) {
-        this.mapData.clear();
-
-        if (val.length) {
-          this.idGetIndex();
-        }
-      },
+      // dataSources (val) {
+      //   this.mapData.clear()
+      //   if (val.length) {
+      //     this.idGetIndex()
+      //   }
+      // },
       keeps: function keeps(newValue) {
         this.virtual.updateParam('keeps', newValue);
         this.virtual.handleSlotSizeChange();
@@ -892,38 +891,41 @@
           buffer: Math.round(this.keeps / 3),
           // recommend for a third of keeps
           uniqueIds: this.getUniqueIdFromDataSources()
-        }, this.onRangeChanged);
-        this.idGetIndex(); // sync initial range
+        }, this.onRangeChanged); // this.idGetIndex()
+        // sync initial range
 
         this.range = this.virtual.getRange();
       },
-      idGetIndex: function idGetIndex() {
+      // idGetIndex () {
+      //   // console.log('[ 1 ] >', 1)
+      //   const { dataKey } = this
+      //   // this.mapData = new Map()
+      //   return this.dataSources.map((dataSource, index) => {
+      //     if (typeof dataKey === 'function') {
+      //       this.mapData.set(dataSource[dataKey], index)
+      //       // return dataKey(dataSource)
+      //     } else {
+      //       // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
+      //       this.mapData.set(dataSource[dataKey], index)
+      //       // return dataSource[dataKey]
+      //     }
+      //   })
+      // },
+      getUniqueIdFromDataSources: function getUniqueIdFromDataSources() {
         var _this2 = this;
 
-        // console.log('[ 1 ] >', 1)
         var dataKey = this.dataKey; // this.mapData = new Map()
 
+        this.mapData.clear();
         return this.dataSources.map(function (dataSource, index) {
           if (typeof dataKey === 'function') {
-            _this2.mapData.set(dataSource[dataKey], index); // return dataKey(dataSource)
+            _this2.mapData.set(dataSource[dataKey], index);
 
-          } else {
-            // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
-            _this2.mapData.set(dataSource[dataKey], index); // return dataSource[dataKey]
-
-          }
-        });
-      },
-      getUniqueIdFromDataSources: function getUniqueIdFromDataSources() {
-        var dataKey = this.dataKey; // this.mapData = new Map()
-
-        return this.dataSources.map(function (dataSource, index) {
-          if (typeof dataKey === 'function') {
-            // this.mapData.set(dataSource[dataKey], index)
             return dataKey(dataSource);
           } else {
             // console.log('[ dataSource[dataKey] ] >', dataSource[dataKey])
-            // this.mapData.set(dataSource[dataKey], index)
+            _this2.mapData.set(dataSource[dataKey], index);
+
             return dataSource[dataKey];
           }
         });
